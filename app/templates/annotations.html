@@ -1,0 +1,55 @@
+<h4>
+    Annotations 
+</h4>
+<!-- <p>
+    Category ID: {{cat_id}}
+    <br>
+    Category Name: {{cat_name}}
+</p> -->
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-borderless">
+            <tr>
+                <td>Category ID: {{cat_id}}</td>
+                <td rowspan="2">
+                    <button 
+                    title="hide annotations for this category"
+                    id="close-cat-button">
+                    <i class="fa fa-minus"></i>
+                </button></td>
+            </tr>
+            <tr>
+                <td>Category Name: {{cat_name}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="table-responsive" id="ann-tables">
+        <table class="table table-striped">
+            <thead id="ann-tables-thead">
+                <tr>
+                    <td><b>Annotation ID</b></td>
+                    <td><b>Highlight</b></td>
+                    <td><b>Delete</b></td>
+                </tr>
+            </thead>
+            <tbody id="ann-tables-tbody">
+                {% for ann_id in allAnn %}
+                    <tr>
+                        <td>{{ann_id}}</td>
+                        <td>
+                            <button 
+                            title="highlight this annotation"
+                            id="emphasize-ann-button-{{ann_id}}">
+                        </button></td>
+                        <td><button 
+                            title="delete this annotation"
+                            id="delete-ann-button-{{ann_id}}">
+                        </button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

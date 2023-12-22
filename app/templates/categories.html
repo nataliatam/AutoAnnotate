@@ -1,0 +1,49 @@
+<h4>
+    Categories
+</h4>
+<i>Select a category to view the associated annotations below.</i>
+<div class="container-fluid">
+    <div class="table-responsive" id="cat-tables">
+        <table class="table table-striped">
+            <thead id="cat-tables-thead">
+                <tr>
+                    <td><b>ID</b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Color</b></td>
+                    <td><b>Highlight</b></td>
+                    <td><b>Delete</b></td>
+                    <td><b>Show</b></td>
+                </tr>
+            </thead>
+
+            <tbody id="cat-tables-tbody">
+                {% for cat in allCat %}
+                    <tr>
+                        <td>{{cat.get_category_id()}}</td>
+                        <td>{{cat.get_category_name()}}</td>
+                        <td>
+                            <span class="dot"
+                            style="height: 40px;width: 40px;background-color:rgb({{cat.get_r()}},{{cat.get_g()}},{{cat.get_b()}});border-radius: 50%;display: inline-block;"></span>
+                        </td>
+                        <td>
+                            <button 
+                            title="Highlight or un-highlight annotations in this category."
+                            id="emphasize-button-{{cat.get_category_id()}}">
+                        </button></td>
+                        <td><button 
+                            title="Delete all annotations in this category for this image. This action cannot be undone."
+                            id="delete-cat-button-{{cat.get_category_id()}}">
+                        </button></td>
+                        <td><button 
+                            title="Expand or collapse the annotations in this category."
+                            id="show-ann-button-{{cat.get_category_id()}}">
+                        </button></td>
+                    </tr>
+                    <tr>
+                        <div id="annotation-list-{{cat.get_category_id()}}"></div>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

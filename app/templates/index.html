@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AutoAnnotate</title>
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href= "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+</head>
+<!-- <div class="tooltip"style="color:black;">Hover over mez
+    <span class="tooltiptext">Tooltip text</span>
+</div> -->
+<body>
+    <header>
+        <h1><a style="text-decoration:none; color:white" href="/">Welcome to AutoAnnotate</a></br></h1>
+    </header>
+    <main>
+        <button style="margin:5px;" id="export-button" title="Download your annotations for this image into a JSON file">
+            Export Annotation(s)</button>
+        <button style="margin:5px;" id="reset-button" title="Remove all annotations from this image. This action cannot be undone.">
+            Remove All Annotation(s)</button>
+        <button style="margin:5px;" id="delete-button" title="Delete this image and all of its annotations. This action cannot be undone.">
+            Delete This Image</button>
+        <button style="margin:5px;" id="return-button" title="Return to the dashboard where you can find and upload other images. All actions you have taken will be saved.">
+            Back</button>
+    </main>
+    <main>
+        <div id="metadata-section">
+            <div id="messagebox" style="border: solid 5px white ;width:450px;height:auto;top:50%;left:40%;background-color:white;color:darkred"></div>
+            <hr>
+            <div id="categories"></div>
+            <hr>
+            <div id="annotations"></div>           
+        </div>
+
+        <div class="canvas-container" id="canvas-container">
+            <canvas id="image-canvas" width="800" height="600"></canvas>
+            <canvas id="annotation-canvas" width="800" height="600"></canvas>
+            <canvas id="emphasis-canvas" width="800" height="600"></canvas>
+        </div>
+        
+        <div id="cover-spin">
+            <p><center style="font-size:30px;position:fixed;left:0;right:0;bottom:70%;">AutoAnnotate is working hard to load your annotations...<br>Thank you for your patience!</center></p>
+        </div>
+    
+        <div class="upload-section">
+            <label class="switch" for="viewToggle">
+                <input type="checkbox" id="viewToggle" name="viewToggle" checked>
+                <span class="slider round"></span>
+                <span class="mode on" style="width:30px;">Show Annotations</span>
+                <span class="mode off" style="width:30px;">Show Annotations</span>
+            </label>
+            <hr>
+            <p>Automatically Annotate</p>
+            <div title="Generate automatic annotations for this image based on pixel colors. You will be prompted to choose a value K for the number of categories and a value N for the number of superpixels, i.e., the number of parts that the image will be divided into. Then, click on the generated annotations to eliminate the ones you would like to remove. The annotations will only dispapear after you click 'Complete auto-annotation', which will remove the desired annotations as well as merge adjacent annotations of the same category.">
+                <i style="border-bottom: 1px dotted #000; text-decoration: none;">
+                    Hover to Show Instructions
+                </i> 
+            </div>
+            <br>
+            <button style="margin:5px;" id="prefill-button" title="Generate automatic annotations for this image based on pixel colors. You will be prompted to choose a value K for the number of categories and a value N for the number of superpixels, i.e., the number of parts that the image will be divided into. Then, click on the generated annotations to eliminate the ones you would like to remove. The annotations will only dispapear after you click 'Complete auto-annotation', which will remove the desired annotations as well as merge adjacent annotations of the same category.">
+                Start Auto-Annotation</button> 
+            <button disabled style="margin:5px;"id="merge-button" title="You can only do this after clicking the button above. This button removes the desired annotations and merges your superpixels (i.e., the number of parts that your image has been divided into) as the same annotation if they are adjacent and in the same category. This action cannot be undone.">
+                Complete Auto-Annotation</button>
+            <hr>
+            <p>Manually Annotate</p>
+            <div title='Manually annotate the image. Begin an annotation by clicking the "Start Annotation" button, use the "Undo Point" button to undo the most recent point and use the "Cancel Annotation" button to cancel and discard your current annotation. Click the "Save Annotation" button to end and save an annotation. Click the "Delete Annotation" button to begin removing an annotation by clicking on it.'>
+                <i style="border-bottom: 1px dotted #000; text-decoration: none;">
+                    Hover to Show Instructions
+                </i> 
+            </div>
+            <br>
+            <button style="margin:5px;" id="annotate-button" title="Begin a manual annotation. Click on the canvas to plot points for an annotation. Plot your points in the order you would like them to be linked.">
+                Start Annotation</button>
+            <button style="margin:5px;" id="undo-button" title="Remove the most recent point in your current manual annotation. This action cannot be undone.">
+                Undo Point</button>
+                <button style="margin:5px;" id="cancel-annotate-button" title="Cancel and discard your current annotation. This action cannot be undone.">
+                Cancel Annotation</button>
+            <button style="margin:5px;" id="end-annotate-button" title="End a manual annotation with at least 3 points. This will connect all the points and update the database.">
+                Save Annotation</button>
+            <button style="margin:5px;" id="remove-polygon-button" title="Remove an annotation. Click on the annotation you would like to remove. This action cannot be undone.">
+                Delete Annotation
+            </button> 
+            <br>
+            <div title="The system will prompt you for confirmation before deleting any annotation(s). To switch this off, turn this toggle switch off. Note that a deletion cannot be undone.">
+                <label class="switch">
+                    <input type="checkbox" id="confirm-delete" checked>
+                    <span class="slider round"></span>
+                    <span class="mode on" >Confirm Deletion</span>
+                    <span class="mode off" >Confirm Deletion</span>
+                </label>
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+    <!-- AJAX script  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="static/main.js"></script>
+    
+</body>
+
+<!-- Code to view all element IDs for debugging -->
+<!-- <head>
+    <title>
+        How to get all ID of the DOM
+        elements with JavaScript ?
+    </title>
+ 
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    </script>
+</head>
+ 
+<body>
+    <p>
+        Click on the button to get all DOM element IDs in an array.
+    </p>
+ 
+    <button onclick="muFunc()">
+        Click Here
+    </button>
+ 
+    <p id="GFG"></p>
+ 
+    <script>
+        let res = document.getElementById("GFG");
+ 
+        function muFunc() {
+            let ID = [];
+             
+            $("*").each(function () {
+                if (this.id) {
+                    ID.push(this.id);
+                }
+            });
+ 
+            res.innerHTML = ID;
+        }
+    </script>
+</body>
+
+</html> -->

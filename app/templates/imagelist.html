@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td><b>Image ID</b></td>
+                    <td><b>Image Filename</b></td>
+                    <td><b>Edited?</b></td>
+                    <td><b>Export annotations</b></td>
+                    <td><b >Delete Image</b>
+                        <br>
+                        <div title="The system will prompt you for confirmation before deleting any image(s). To switch this off, turn this toggle switch off. Note that a deletion cannot be undone.">
+                            <label class="switch" style="margin-top:15px;">
+                                <input type="checkbox" id="confirm-delete" checked>
+                                <span class="slider round"></span>
+                                <span class="mode on" >Confirm Deletion</span>
+                                <span class="mode off" >Confirm Deletion</span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+
+            {% for image in allImages %}
+                <tr>
+                    <td><a href= {{image.get_annotation_url()}} target="_self">{{image.get_image_id()}}</a></td>
+                    <td>{{image.get_image_filename()}}</td>
+                    <td>{{image.get_annotated_string()}}</td>
+                    <td><button
+                        title="Download your annotations for this image into a JSON file"
+                        style="font-size:24px;background-color:#e77500;color:black;margin:5px;" 
+                        id="export-button-{{image.get_image_id()}}">
+                        <i class="fa fa-save"></i>
+                    </button>
+                    </td>
+                    <td><button 
+                        title="Delete this image and all of its annotations. This action cannot be undone."
+                        style="font-size:24px;background-color:#e77500;color:black;margin:5px;" 
+                        id="delete-button-{{image.get_image_id()}}">
+                        <i class="fa fa-trash-o"></i>
+                    </button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

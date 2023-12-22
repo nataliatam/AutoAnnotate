@@ -1,0 +1,311 @@
+html {zoom: 100%;}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e77500; /* Princeton orange on the background */
+}
+
+header {
+  text-align: center;
+  background-color: #000000; /* Black on the header */
+  color: white;
+  padding: 10px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#cover-spin {
+  position:fixed;
+  width:100%;
+  left:0;right:0;top:0;bottom:0;
+  background-color: rgba(255,255,255,0.7);
+  z-index:9999;
+  display:none;
+}
+
+#delete-spin {
+  position:fixed;
+  width:100%;
+  left:0;right:0;top:0;bottom:0;
+  background-color: rgba(255,255,255,0.7);
+  z-index:9999;
+  display:none;
+}
+
+@-webkit-keyframes spin {
+from {-webkit-transform:rotate(0deg);}
+to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+from {transform:rotate(0deg);}
+to {transform:rotate(360deg);}
+}
+
+#cover-spin::after {
+  content:'';
+  display:block;
+  position:absolute;
+  left:48%;top:40%;
+  width:40px;height:40px;
+  border-style:solid;
+  border-color:black;
+  border-top-color:transparent;
+  border-width: 4px;
+  border-radius:50%;
+  -webkit-animation: spin .8s linear infinite;
+  animation: spin .8s linear infinite;
+}
+
+#delete-spin::after {
+  content:'';
+  display:block;
+  position:absolute;
+  left:48%;top:40%;
+  width:40px;height:40px;
+  border-style:solid;
+  border-color:black;
+  border-top-color:transparent;
+  border-width: 4px;
+  border-radius:50%;
+  -webkit-animation: spin .8s linear infinite;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#image-canvas, #annotation-canvas, #emphasis-canvas {
+  position: absolute; /* Position canvases absolutely within the container */
+  top: 0;
+  left: 0;
+  width: 100%; /* Take up the entire width of the container */
+  height: 100%; /* Take up the entire height of the container */
+}
+
+#cat-tables, #ann-tables {
+  max-height:200px;
+}
+
+#button-table {
+  width:300px;
+}
+
+#annotation-canvas {
+  z-index: 0; /* Set a higher z-index for the annotation canvas to overlay the image canvas */
+}
+
+#annotation-canvas {
+  z-index: 1; /* Set a higher z-index for the annotation canvas to overlay the image canvas */
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+}
+
+.canvas-container {
+  border: 1px solid #000000;
+  width: 800px;
+  height: 600px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+  position: relative; /* Make the container relatively positioned */
+}
+
+.upload-section {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px; 
+  margin-bottom: 20px; /* Add margin to provide spacing between the canvas and upload section */
+  display: flex;
+  flex-direction: column;
+}
+
+.metadata-section {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px; 
+  margin-bottom: 20px;  /* Add margin to provide spacing between the canvas and upload section */
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+
+.annotations {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px; 
+  margin-bottom: 20px;  /* Add margin to provide spacing between the canvas and upload section */
+  /* display: fixed; */
+  /* flex-direction: column; */
+}
+
+.categories {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px; 
+  margin-bottom: 20px;  /* Add margin to provide spacing between the canvas and upload section */
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+
+button:enabled {
+  margin-top: 10px;
+  background-color: #000000; /* Black on buttons */
+  color: white; /* White text on buttons */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+button:disabled {
+  margin-top: 10px;
+  background-color: lightgrey; /* Black on buttons */
+  color: darkgrey; /* White text on buttons */
+  border: none;
+  padding: 10px 20px;
+}
+
+button:hover:enabled {
+  background-color: #e77500; /* Princeton orange on buttons when hovered and button enabled */
+}
+
+footer {
+  text-align: center;
+  background-color: #000000; /* Black on the footer */
+  color: white;
+  padding: 10px;
+}
+
+/* Styles for switch toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Additional styles for mode labels (Switch toggle) */
+.mode {
+  position: absolute;
+  color: black;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  transform: translate(-45%, -50%);
+  top: 50%;
+}
+
+.mode.on {
+  left: 100%;
+  margin-left: 30px; /* Adjust as needed */
+}
+
+.mode.off {
+  left: 100%;
+  margin-left: 30px; /* Adjust as needed */
+  display: none; /* Hide by default */
+}
+
+input:checked + .slider + .mode.on {
+  display: none; /* Hide when switch is checked */
+}
+
+input:checked + .slider + .mode.on + .mode.off {
+  display: block; /* Show when switch is checked */
+}
